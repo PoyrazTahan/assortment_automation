@@ -9,11 +9,11 @@ folder     = folder
 file_sales = f'{folder}//sales//monthly_main_20210909_0232.h5'
 data       = pd.read_hdf(file_sales,key='df')
 
-file_lkup = f'{folder}//Sku_lkup//skin2_manuel_endcoing_20210930_1000.xlsx'
+file_lkup = f'{folder}//Sku_lkup//skin2_manuel_endcoing_20211004_1220.xlsx'
 df_lkup   = pd.read_excel(file_lkup,sheet_name='Sheet1',dtype={'upc_13':str,'upc_full':str,'upc':str,'upc13_noc_check':str,'UPC 12 DIGIT':str,'EAN 14':str,'itemno':str,'vendor':str})
 # %%
 interested_columns = [
-    'upc_13', 'upc', 'itemdesc', 'min350store',
+    'upc_13', 'upc', 'itemdesc', 'exclude',
         'CATEGORY_grp1', 'BENEFIT_grp1', 'SKIN_grp1', 'TYPE_grp1', 'BODY_grp1', 'DERMA_grp1', 'TIER_grp1',
         'brand','subbrand', 'vendor', 'mfrname', 'pl_type','itemstatus',
         'sku_SALES3', 'sku_UNITS3', 'sku_MAX_STORE3', 'sku_AVG_PRICE', 
@@ -206,7 +206,7 @@ main_column_dict_rad = {
     'value'        : 'SALES',
     'unit'         : 'UNITS',
     'weights'      : 'UNIQUE_STORE_SCAN',
-    'tail'         : 'min350store',
+    'tail'         : 'exclude',
     'last_n_months': 'covid_exclude',
     'brand'        : 'brand',
     'status'       : 'itemstatus',
@@ -220,7 +220,7 @@ additional_column_dict = {
 }
 # %% Create the main data frame
 cols = list( main_column_dict_rad.values() )
-cols = [e for e in cols if e not in ('min350store','brand','itemstatus')]
+cols = [e for e in cols if e not in ('exclude','brand','itemstatus')]
 data = data[cols].copy()
 df = data.merge(df_lkup, on=main_column_dict_rad['id'],how='inner')
 df['upc_13'] = 'upc_' + df['upc_13'].astype(str)
