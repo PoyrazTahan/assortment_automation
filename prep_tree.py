@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 
 # %%
-folder = f'..//data'
+folder = f'C://Users//Poyraz Tahan//Box Sync//_Personal//6_RAD//skin//data'
 """"
 Regular Pipeline:
     Preliminary:
